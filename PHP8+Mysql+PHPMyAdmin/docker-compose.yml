@@ -1,0 +1,48 @@
+version: "3"
+services:
+  db:
+    image: mysql
+    container_name: MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - php8project
+  php:
+    image: php:8.2-rc-apache
+    container_name: PHP
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - php8project
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: PHPMyAdmin
+    restart: always
+    ports:
+      - 3001:80
+    depends_on:
+      - db
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=MySQL
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    networks:
+      - php8project
+  # react-app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./app:/var/www/html/app
+  #   networks:
+  #     - php8project
+
+networks:
+  php8project:
+    name: php8project
+    driver: bridge
