@@ -1,0 +1,6 @@
+
+# Borrar caché
+docker system prune -a
+
+# Ejecutar consola de un contenedor
+docker exec -it container sh

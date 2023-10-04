@@ -1,0 +1,40 @@
+version: "3"
+services:
+  db:
+    image: mysql
+    container_name: MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - php7project
+  php:
+    build: ./docker/.
+    # image: php:7.4-rc-apache
+    container_name: PHP74
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - php7project
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: PHPMyAdmin
+    restart: always
+    ports:
+      - 3001:80
+    depends_on:
+      - db
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=MySQL
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    networks:
+      - php7project
+
+networks:
+  php7project:
+    name: php7project
+    driver: bridge
