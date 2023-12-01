@@ -17,9 +17,6 @@ COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
 # Copia los archivos de tu proyecto de PHP al directorio del servidor web
 COPY . /var/www/html
 
-# Instala Node.js y npm
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-    && apt-get install -y nodejs
 
 # Regresa al directorio del servidor web de PHP
 WORKDIR /var/www/html
