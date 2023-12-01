@@ -4,12 +4,14 @@ services:
     image: mysql
     container_name: MySQL
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      #MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - php7project
   php:
     build: ./docker/.
-    # image: php:7.4-rc-apache
     container_name: PHP74
     restart: always
     ports:
@@ -28,9 +30,9 @@ services:
       - db
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=MySQL
-      - PMA_USER=root
-      - PMA_PASSWORD=root
+      - PMA_HOST=db
+      - PMA_USER=${MYSQL_USER}
+      - PMA_PASSWORD=${MYSQL_PASSWORD}
     networks:
       - php7project
 
