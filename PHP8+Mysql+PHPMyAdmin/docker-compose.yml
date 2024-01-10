@@ -6,16 +6,17 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     networks:
-      - php8project
+      - gesprendercoreframework
   php:
-    image: php:8.2-rc-apache
-    container_name: PHP
+    build: ./docker/.
+    container_name: PHP8.2
+    restart: always
     ports:
-      - "8000:80"
+      - "80:80"
     volumes:
       - ./:/var/www/html
     networks:
-      - php8project
+      - gesprendercoreframework
   phpmyadmin:
     image: phpmyadmin
     container_name: PHPMyAdmin
@@ -30,19 +31,9 @@ services:
       - PMA_USER=root
       - PMA_PASSWORD=root
     networks:
-      - php8project
-  # react-app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./app:/var/www/html/app
-  #   networks:
-  #     - php8project
+      - gesprendercoreframework
 
 networks:
-  php8project:
-    name: php8project
+  gesprendercoreframework:
+    name: gesprendercoreframework
     driver: bridge
